@@ -1,7 +1,6 @@
 import numpy as np
 import sympy as sy
-from src.main.python.combinations import calculate_all, all_combinations
-from src.main.python.util import calc_partial_derivatives_at
+from src.util import calc_partial_derivatives_at, calc_all_values, all_combinations
 
 
 def calc_minmax(func, value_data, error_data):
@@ -17,7 +16,7 @@ def calc_minmax(func, value_data, error_data):
     '''
 
     ref = func(*value_data)
-    all_values = calculate_all(func, value_data, error_data)
+    all_values = calc_all_values(func, value_data, error_data)
     all_errors = np.abs(all_values - ref)
     err = np.max(all_errors)
 
@@ -32,7 +31,7 @@ def calc_standard(func, symbols: str, value_data, error_data):
     '''
     Calculates an uncertainty using a standard uncertainty propagation method
     :param func: Function to calulate (requires sympy fuctions ex. sympy.exp() rather than numpy.exp())
-    :param symbols:
+    :param symbols: String of all symbols in the function separated with whitespace, ex. 'x y z'
     :param value_data: All the variables required in a function arguments
     :param error_data: All the errors to variables, has to be of same size as value_data array
     (so even if a variable has an uncertainty of 0 it needs to be added to the array)

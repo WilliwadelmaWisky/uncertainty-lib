@@ -1,5 +1,61 @@
 import math
 import numpy as np
+import sympy as sy
+
+
+def calc_partial_derivatives(func, symbols: str):
+    '''
+    Calculates an uncertainty using a standard uncertainty propagation method
+    :param func: Function to calulate (requires sympy fuctions ex. sympy.exp() rather than numpy.exp())
+    :param symbols:
+    :return: Calculated uncertainty
+    '''
+
+    symbols = sy.symbols(symbols)
+    f = func(*symbols)
+    derivatives = []
+
+    for i in range(len(symbols)):
+        derivatives.append(f.diff(symbols[i]))
+
+    return derivatives
+
+
+def calc_partial_derivatives_at(func, symbols: str, point):
+    '''
+    Calculates an uncertainty using a standard uncertainty propagation method
+    :param func: Function to calulate (requires sympy fuctions ex. sympy.exp() rather than numpy.exp())
+    :param symbols:
+    :param point: A tuple or an array of input values
+    :return: Calculated uncertainty
+    '''
+
+    point_data = []
+    s = sy.symbols(symbols)
+    for i in range(len(s)):
+        point_data.append((s[i], point[i]))
+
+    derivatives = calc_partial_derivatives(func, symbols)
+    results = []
+    for i in range(len(derivatives)):
+        results.append(derivatives[i].subs(point_data))
+
+    return results
+
+
+def calc_partial_derivative_at(func, symbols: str, point, axis: int):
+    '''
+    Calculates an uncertainty using a standard uncertainty propagation method
+    :param func: Function to calulate (requires sympy fuctions ex. sympy.exp() rather than numpy.exp())
+    :param symbols:
+    :param point: A tuple or an array of input values
+    :param axis: An integer value of the index of the derivative (axis = 0, 1, 2...). 0 means the first argument,
+    1 second argument and so on.
+    :return: Calculated uncertainty
+    '''
+
+    values = calc_partial_derivatives_at(func, symbols, point)
+    return values[axis]
 
 
 def all_combinations(arg_count: int):
@@ -55,16 +111,16 @@ def iterate_all(value_data, error_data, on_iterate) -> None:
 
     for x in range(0, config.shape[0]):
         for y in range(0, config.shape[1]):
-            value_mask = config[x, y]
+            value_mask = int(config[x, y])
             values[y] = get_masked_value(value_data[y], error_data[y], value_mask)
 
         on_iterate((x, values, config[x]))
 
 
-def calculate_all(func, value_data, error_data):
+def calc_all_values(func, value_data, error_data):
     '''
-    Calculates all the possible configurations using min-max method
-    :param func: Function to apply min-max method
+    Calculates all the possible configurations for min-max method
+    :param func: Function to calculate configurations from
     :param value_data: All the variables required in a function arguments
     :param error_data: All the errors to variables, has to be of same size as value_data array
     :return: Numpy array (1d) containing all the calculated values

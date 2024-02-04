@@ -1,5 +1,5 @@
 import numpy as np
-from src.uncertainty import calc_minmax, calc_standard
+from src.uncertainty import calc_minmax, calc_standard, standard
 from math import isclose
 
 
@@ -31,10 +31,13 @@ def test_calc_standard() -> None:
     :return:
     '''
 
-    val = np.array([1, 2])
+    val = np.array([1, 2], dtype=float)
     err = np.array([0.2, 0.5])
 
     result = calc_standard(lambda x, y: x + y, 'x y', val, err)
+    assert isclose(result, 0.5385, abs_tol=0.01)
+
+    result = standard(lambda x: x[0] + x[1], val, err)
     assert isclose(result, 0.5385, abs_tol=0.01)
 
     result = calc_standard(lambda x, y: x**2 + 2*y, 'x y', val, err)

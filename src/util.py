@@ -134,3 +134,18 @@ def calc_all_values(func, value_data, error_data):
 
     iterate_all(value_data, error_data, lambda values: assign_calc(values[0], values[1]))
     return results
+
+
+def partial_df(f, x, axis: int, h: float = 1e-8) -> float:
+    """
+    Calculate (numerical) partial derivate at a certain point
+    :param f: Function
+    :param x: Point (list or tuple)
+    :param axis: Index of the partial derivative (ex. f(x, y), axis=0 -> df/dx, axis=1 -> df/dy)
+    :param h: Precision of the calculation, small value
+    :return: Value of the partial derivative
+    """
+    xplus, xminus = np.copy(x), np.copy(x)
+    xplus[axis] += h
+    xminus[axis] -= h
+    return 0.5 * (f(xplus) - f(xminus)) / h

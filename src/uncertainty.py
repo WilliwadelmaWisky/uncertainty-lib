@@ -1,6 +1,7 @@
 import numpy as np
 import sympy as sy
-from src.util import calc_partial_derivatives_at, calc_all_values, all_combinations
+from src.util import calc_partial_derivatives_at, calc_all_values, all_combinations, partial_df
+from math import sqrt
 
 
 def calc_minmax(func, value_data, error_data):
@@ -46,3 +47,20 @@ def calc_standard(func, symbols: str, value_data, error_data):
 
     error = sy.sqrt(variance)
     return error
+
+
+def standard(f, val, err) -> float:
+    """
+    Calculate uncertainty with a standard uncertainty propagation method
+    :param f: Function
+    :param val: Values of function parameters (list or tuple)
+    :param err: Errors of values (list or tuple). If a value has 0 uncertainty,
+    it must still be included in the list
+    :return:
+    """
+    error = 0.0
+    for i in range(0, len(val)):
+        error += (partial_df(f, val, i) * err[i])**2
+
+    return sqrt(error)
+

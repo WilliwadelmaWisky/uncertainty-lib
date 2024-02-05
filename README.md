@@ -3,7 +3,7 @@
 A Library for python that helps to calculate uncertanties. 
 Currently supports minmax method and standard uncertainty propagation method.
 
-Work in Progress
+Version 1.0
 
 ## Dependencies
 - Numpy
@@ -32,7 +32,7 @@ point_err = array([0.2, 0.3])
 err = standard(f, point, point_err)
 ```
 
-The `err` variable now has the calculated uncertainty `~3.617`.
+The `err` variable now has the calculated uncertainty `3.617`.
 
 ### Minmax-method
 Calculate an uncertainty of a function `f(x, y) = x^2 * y^2` at `{ x = (1.0 ± 0.2), y = (2 ± 0.3) }` using a minmax uncertainty propagation method. 

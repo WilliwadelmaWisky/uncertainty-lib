@@ -1,24 +1,13 @@
-from src.util import calc_partial_derivatives_at, all_combinations
+from src.util import partial_df
+from numpy import array
+from math import isclose
 
 
-def test_calc_partial_derivatives_at() -> None:
-    '''
-    Tests for calc_partial_derivatives_at
+def test_partial_df() -> None:
+    """
+    A couple of tests for partial_df
     :return:
-    '''
-
-    point = (3, 2)
-    derivatives = calc_partial_derivatives_at(lambda x, y: x**2 + 2*y, 'x y', point)
-    assert derivatives[0] == 6
-    assert derivatives[1] == 2
-
-
-def test_all_combinations() -> None:
-    '''
-    Tests for all_combinations
-    :return:
-    '''
-
-    assert len(all_combinations(1)) == 3
-    assert len(all_combinations(2)) == 9
-    assert len(all_combinations(3)) == 27
+    """
+    f = lambda x, y: x**2 + y**2
+    assert isclose(partial_df(f, array([1, 2]), 0), 2, abs_tol=0.01)
+    assert isclose(partial_df(f, array([1, 2]), 1), 4, abs_tol=0.01)

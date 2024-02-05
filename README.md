@@ -5,10 +5,8 @@ Currently supports minmax method and standard uncertainty propagation method.
 
 Work in Progress
 
-Modules used:
+Dependencies:
 - Numpy
-- Sympy
-- Pytest
 
 Installation
 - ...

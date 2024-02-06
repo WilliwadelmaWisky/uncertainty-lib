@@ -16,7 +16,7 @@ Version 1.0
 	3. Copy/Paste the scripts
 
 ## Examples
-NOTE: The import statements may vary dependeding on where the files a located!
+NOTE: The import statements may vary depending on where the files a located!
 
 ### Standard-method
 Calculate an uncertainty of a function `f(x, y) = x^2 * y^2` at `{ x = (1.0 ± 0.2), y = (2 ± 0.3) }` using a standard uncertainty propagation method.
@@ -32,10 +32,10 @@ point_err = array([0.2, 0.3])
 err = standard(f, point, point_err)
 ```
 
-The `err` variable now has the calculated uncertainty `3.617`.
+The `err` variable now has the calculated uncertainty `2`.
 
 ### Minmax-method
-Calculate an uncertainty of a function `f(x, y) = x^2 * y^2` at `{ x = (1.0 ± 0.2), y = (2 ± 0.3) }` using a minmax uncertainty propagation method. 
+Calculate an uncertainty of a function `f(x, y) = x^2 * y^2` at `{ x = (1.0 ± 0.2), y = (2 ± 0.3) }` using a minmax (worst-case-scenario) uncertainty propagation method. 
 
 ```python
 from uncertainty import minmax
@@ -48,4 +48,4 @@ point_err = array([0.2, 0.3])
 err = minmax(f, point, point_err)
 ```
 
-The `err` variable now has the calculated uncertainty `2`
+The `err` variable now has the calculated uncertainty `3.617`

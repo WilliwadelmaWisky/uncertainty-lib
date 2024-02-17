@@ -10,10 +10,8 @@ Version 1.0
 
 ## Installation
 - Make sure to have dependencies installed to your project
-- Bring the contents of src/ to your project
-	1. Download the zip, unzip and copy the contents of src/ to your project or
-	2. Clone the repo and copy the contents of src/ to your project or
-	3. Copy/Paste the scripts
+- Download the `uncertainty-lib.zip` from releases
+- Unzip and paste to your project
 
 ## Examples
 NOTE: The import statements may vary depending on where the files a located!
